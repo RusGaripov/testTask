@@ -1,10 +1,9 @@
-import React, { useState,useEffect } from "react";
+import React, { useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import { useForm } from "react-hook-form";
 import styles from "./Login.module.scss";
 import { fetchAuth, selectIsAuth } from "../../redux/slices/auth";
 import { Navigate } from "react-router-dom";
@@ -24,7 +23,6 @@ export const Login = () => {
 
   const onChangePasswordHandler = (event) => {
     setPassword(event.target.value);
-    console.log(password);
   };
 
   const dispatch = useDispatch();
@@ -39,7 +37,7 @@ export const Login = () => {
       return alert("Не удалось авторизоваться");
     }
     if ("access_token" in response.payload) {
-      window.localStorage.setItem("token", response.payload.access_token);
+      window.localStorage.setItem("access_token", response.payload.access_token);
     } 
     return alert("Пользователь залогинился");
   };
@@ -64,6 +62,7 @@ export const Login = () => {
           className={styles.field}
           onChange={onChangePasswordHandler}
           label="Password"
+          type="password"
           fullWidth
         />
         <Button type="submit" size="large" variant="contained" fullWidth>

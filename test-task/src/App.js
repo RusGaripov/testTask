@@ -1,21 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Header } from './components/Header';
 import { Registration } from './pages/Registration';
 import { Login } from './pages/Login';
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAuthMe, selectIsAuth } from "./redux/slices/auth";
+import { AddLongLink } from "./pages/AddLongLink";
 
 function App() {
-  let isAuth = useSelector(selectIsAuth);
-
-  // const dispatch = useDispatch();
-
-  // React.useEffect(() => {
-  //   dispatch(fetchAuthMe());
-  //   console.log(isAuth)
-  // }, []);
   return (
     <>
       <Header />
@@ -23,10 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Registration />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/posts/:id" element={<FullPost />} />
-        <Route path="posts/:id/edit" element={<AddPost />} />
-        <Route path="posts/add-post" element={<AddPost />} />
-         */}
+        <Route path="/links/convert-link" element={<AddLongLink />} />
       </Routes>
 
     </>

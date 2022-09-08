@@ -5,9 +5,8 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import styles from "./Login.module.scss";
-import { Navigate } from "react-router-dom";
-import { fetchRegister, selectIsAuth } from "../../redux/slices/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { fetchRegister,fetchAuth} from "../../redux/slices/auth";
+import { useDispatch} from "react-redux";
 
 export const Registration = () => {
  
@@ -23,7 +22,6 @@ export const Registration = () => {
 
   const onChangePasswordHandler = (event) => {
     setPassword(event.target.value);
-    console.log(password);
   };
 
   const dispatch = useDispatch();
@@ -34,6 +32,12 @@ export const Registration = () => {
     const response = await dispatch(
       fetchRegister({ username: user, password: password })
     );
+    const response2 = await dispatch(
+      fetchAuth({ username: user, password: password })
+    );
+    if ("access_token" in response2.payload) {
+      window.localStorage.setItem("access_token", response.payload.access_token);
+    } 
 
     if (!response.payload) {
       return alert("Не удалось зарегистрироваться");
@@ -46,7 +50,7 @@ export const Registration = () => {
 
  //переменная , которая берется из успешного ответа на запрос
   if (username) {
-    return <Navigate to="/" />;
+    return <div>Пользователь успешно зарегистрирован</div>
   }
 
   return (
@@ -67,6 +71,7 @@ export const Registration = () => {
         <TextField
           className={styles.field}
           label="Password"
+          type="password"
           onChange={onChangePasswordHandler}
           fullWidth
         />
